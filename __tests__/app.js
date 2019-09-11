@@ -22,7 +22,7 @@ describe('generator:app', () => {
           keywords: [],
           license: 'MIT'
         });
-    });
+    }, 10000);
 
     it('created and CD into a folder named like the generator', () => {
       assert.equal(path.basename(process.cwd()), 'generator-temp');
