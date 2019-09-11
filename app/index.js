@@ -6,10 +6,18 @@ const _ = require('lodash');
 const extend = require('deep-extend');
 const mkdirp = require('mkdirp');
 
+const SCOPE_REGEXP = /^@([^/]+)\//;
+
 function makeGeneratorName(name) {
+  let scope = null;
+  const scopeMatch = name.match(SCOPE_REGEXP);
+  if (scopeMatch) {
+    scope = scopeMatch[1];
+    name = name.slice(scopeMatch[0].length);
+  }
   name = _.kebabCase(name);
   name = name.indexOf('generator-') === 0 ? name : 'generator-' + name;
-  return name;
+  return scope ? `@${scope}/${name}` : name;
 }
 
 module.exports = class extends Generator {
